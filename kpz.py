@@ -12,6 +12,7 @@ import numpy as np
 
 def vizinhanca(matriz,x,y):
     #Periodidicidade
+    #Condições para caso x seja igual ao numero de linhas - 1, que é o indice máximo da matrix. Análogo para y.
     if x == matriz.shape[1]-1:
         x_1 = 0
     else:
