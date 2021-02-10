@@ -52,22 +52,6 @@ def walkint(steps):
     return
     
 def dla(N=800,L=100,H=100):
-    """
-    Parameters
-    ----------
-    N : INT, optional
-        Number of points for the DLA. The default is 800.
-    L : INT, optional
-        Matrix length. The default is 100.
-    H : INT, optional
-        Matrix height. The default is 100.
-
-    Returns
-    -------
-    matriz : NP.ARRAY
-        Matrix of particles.
-
-    """
     #Variável pra definir a quantidade de iterações
     Pontos = 0 
     #Criação da matriz.
@@ -109,10 +93,10 @@ def dla(N=800,L=100,H=100):
                 vizinho = True #Substitui valor de verdade para sair do loop
                 matriz[y,x] = 1 #Adiciona particula na posição atual do Random Walk
                 #Redefine o menor valor em x e y onde tem particulas
-                if newX > xMax: xMax = x
-                if newY > yMax: yMax = y
-                if newX < xMin: xMin = x
-                if newY < yMin: yMin = y
+                if x > xMax: xMax = x
+                if y > yMax: yMax = y
+                if x < xMin: xMin = x
+                if y < yMin: yMin = y
                 #Com a nova posição das particulas, redefine os dominios do Random Walk se for preciso. Nunca ultrapassando os limites da matriz.
                 dominioMinX = max([xMin - padding, 0])
                 dominioMaxX = min([xMax + padding, L-1])                
