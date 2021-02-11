@@ -9,6 +9,7 @@ Created on Sun Feb  7 12:18:20 2021
 import random as rdm
 import matplotlib.pyplot as plt
 import numpy as np
+import time
 
 def vizinhanca(matriz,x,y):
     #Periodidicidade
@@ -30,12 +31,14 @@ def vizinhanca(matriz,x,y):
 directions = [(0,1),(0,-1),(1,0),(-1,0),(1,1),(1,-1),(-1,1),(-1,-1)]
 #Nova versão do program de dla mudando condição de fixação de particula para aderir apenas caso haja particulas nos cantos e desconsiderando laterais.
 def kpz(N=800,L=100,H=100):
+    #Variável pra contar em quanto tempo o programa roda pra saber o quão impactante é a modificação do padding
+    start_time = time.time()
     #Variável pra definir a quantidade de iterações
     Pontos = 0 
     #Criação da matriz.
     matriz = np.zeros((H,L)) 
     #Um valor do espaçamento  para até onde vamos ter o domínio do random walk. Andar por toda a matriz pode levar tempo demais.
-    padding = 20 
+    padding = 10
     #Definimos que nosso domínio começa do centro da matriz.
     x, y = round(L/2), round(H/2)
     #Menores e maiores valores em x e y. Como começamos apenas com uma particula, eles são os mesmos.
@@ -71,10 +74,10 @@ def kpz(N=800,L=100,H=100):
                 vizinho = True #Substitui valor de verdade para sair do loop
                 matriz[y,x] = 1 #Adiciona particula na posição atual do Random Walk
                 #Redefine o menor valor em x e y onde tem particulas
-                if x > xMax: xMax = x
-                if y > yMax: yMax = y
-                if x < xMin: xMin = x
-                if y < yMin: yMin = y
+                xMax = max(x,xMax)
+                yMax = max(y,yMax)
+                xMin = min(x,xMin)
+                yMin = min(y,yMin)
                 #Com a nova posição das particulas, redefine os dominios do Random Walk se for preciso. Nunca ultrapassando os limites da matriz.
                 dominioMinX = max([xMin - padding, 0])
                 dominioMaxX = min([xMax + padding, L-1])                
@@ -89,5 +92,6 @@ def kpz(N=800,L=100,H=100):
     fig, ax = plt.subplots(figsize = (8,8))
     ax.matshow(matriz,interpolation='nearest')
     ax.axis('off')
-    return matriz
+    print("--- %s Segundos ---" % (time.time() - start_time))
+    return
 
